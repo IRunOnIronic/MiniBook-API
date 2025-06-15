@@ -54,7 +54,7 @@ router.put('/:id',async(req,res,next)=>{
       const bookId = req.params.id;
       const updates = req.body;
 
-      if(!updates || Object.keys(updates).length == 0){
+      if(!updates || Object.keys(updates).length === 0){
         return res.status(400).json({error: 'No update data sent'});
       }
       const books = await loadBooks();
@@ -64,13 +64,15 @@ router.put('/:id',async(req,res,next)=>{
         return res.status(404).json({error: "Book not found"});
       }
 
-      const allowed = ['title','author','pages'];
+      const allowed = ['title', 'author', 'pages'];
+
       allowed.forEach(key => {
-        allowed.forEach['title','author','pages'];
-        if(updates[key] !== undefined){
-            books[idx][key] = updates[key];
-        }
-      });
+      if (updates[key] !== undefined) {
+      if (key === 'pages' && typeof updates[key] !== 'number') return; 
+       books[idx][key] = updates[key];
+  }
+});
+
 
       await saveBooks(books);
       res.json(books[idx]);
